@@ -1,9 +1,13 @@
 {% extends "blog/base.html" %}
 {% block content %}
-    <h2>You have been logged out</h2>
-    <div class="border-top pt-3">
-        <small class="text-muted">
-             Login again <a href="{% url 'login' %}">Sign In</a>
-        </small>
-    </div>
-{% endblock content %}
+{% if user.is_authenticated %}
+        <form method="POST" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <h2>You have been logged out</h2>
+            <button type="submit">Logout</button>
+        </form>
+    {% else %}
+        <h3>Please select the login below to logout</h3>
+        <a href="{% url 'login' %}">Login</a>
+    {% endif %}
+{% endblock content %} 
